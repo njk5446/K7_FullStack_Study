@@ -1,0 +1,39 @@
+package edu.pnu.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import io.micrometer.common.lang.NonNull;
+
+@Configuration
+public class CutomConfig implements WebMvcConfigurer{
+	
+//	@Override
+//	public void addCorsMappings(@NonNull CorsRegistry registry) {
+//		registry.addMapping("/**") // 모든 주소에 대해서
+//				.allowedMethods(CorsConfiguration.ALL) // 모든 Method에 대해서
+//				.allowedOrigins(CorsConfiguration.ALL); // 모든 Origin에 대해서
+//	}
+	
+	@Override
+	public void addCorsMappings(@NonNull CorsRegistry registry) {
+		registry.addMapping("/board/**") // board 포함 하부 모든 주소에 대해서
+				.allowedMethods(HttpMethod.GET.name(),
+								HttpMethod.POST.name()) // Get & Post Method에 대해서
+				.allowedOrigins("http://localhost:3000",  "http://127.0.0.1:3000");
+		// 해당 Origin만 접속이 허용
+		
+		registry.addMapping("/member/**")
+				.allowedMethods(HttpMethod.GET.name(),
+								HttpMethod.PUT.name())
+				.allowedOrigins("http://localhost:3000");
+	}
+	
+	
+	
+	
+
+}
